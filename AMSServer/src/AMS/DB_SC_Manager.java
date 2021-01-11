@@ -8,6 +8,7 @@ package AMS;
 import AMS.Interfaces.SystemManagerInterface;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoIterable;
 import java.rmi.AlreadyBoundException;
@@ -16,15 +17,34 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.bson.Document;
 
 /**
  *
  * @author mahmo
  */
 public class DB_SC_Manager {
+    
+     private static MongoClient mongoClient;
 
+    
     public DB_SC_Manager(){
+        String connectionString = "mongodb+srv://Admin:ydv4FZVwlrw5fAOF@ams.ff92t.mongodb.net/<dbname>?retryWrites=true&w=majority";
+        Logger.getLogger("org.mongodb.driver").setLevel(Level.WARNING);
         try {
+            mongoClient = new MongoClient(new MongoClientURI(connectionString));
+            MongoIterable<String> mc = mongoClient.listDatabaseNames();
+            MongoCursor<String> cursor = mc.cursor();
+            while (cursor.hasNext()) {
+                System.out.println(cursor.next());
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception occured, Database connection Error");
+        }
+    }
+    
+    public void RegisterSystemManager(){
+         try {
             // My remote object [Skeleton]
             SystemManagerInterface sm = new SystemManager();
             // My RMI Registry
@@ -36,19 +56,12 @@ public class DB_SC_Manager {
         } catch (AlreadyBoundException | RemoteException ex) {
             System.out.println("Exception occured, problem connecting the server main.");
         }
-        String connectionString = "mongodb+srv://Admin:ydv4FZVwlrw5fAOF@ams.ff92t.mongodb.net/<dbname>?retryWrites=true&w=majority";
-        Logger.getLogger("org.mongodb.driver").setLevel(Level.WARNING);
-        try {
-            MongoClient mongoClient = new MongoClient(new MongoClientURI(connectionString));
-            MongoIterable<String> mc = mongoClient.listDatabaseNames();
-            MongoCursor<String> cursor = mc.cursor();
-            while (cursor.hasNext()) {
-                System.out.println(cursor.next());
-            }
-        } catch (Exception ex) {
-            System.out.println("Exception occured, Database connection Error");
-        }
     }
+    
+    public static MongoClient getMongoClient() {
+        return mongoClient;
+    }
+    
     
     
 }

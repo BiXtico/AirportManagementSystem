@@ -5,6 +5,9 @@
  */
 package AMS.ResevationSubSystem;
 
+import AMS.User;
+import java.rmi.server.UnicastRemoteObject;
+
 /**
  *
  * @author mahmo

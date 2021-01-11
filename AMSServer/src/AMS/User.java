@@ -9,6 +9,6 @@ package AMS;
  *
  * @author mahmo
  */
-public class User {
+public class User{
 
 }
