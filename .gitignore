@@ -4,3 +4,9 @@ AMSClient/nbproject
 AMSClient/test
 AMSClient/build.xml
 AMSClient/manifest.mf
+AMSServer/build
+AMSServer/dist
+AMSServer/nbproject
+AMSServer/test
+AMSServer/build.xml
+AMSServer/manifest.mf
