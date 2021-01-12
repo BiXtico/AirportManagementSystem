@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package AMS.ResevationSubSystem;
+package AMS.DataModels;
 
-import AMS.FlightManagementSubSystem.Flight;
 import java.util.ArrayList;
 
 
@@ -26,8 +25,7 @@ public class Passenger {
         this.billingAcc = billingAcc;
         this.bookings = bookings;
     }
-
-    public String getStatus() {
+        public String getStatus() {
         return status;
     }
 
@@ -57,33 +55,5 @@ public class Passenger {
 
     public void setBookings(ArrayList<Booking> bookings) {
         this.bookings = bookings;
-    }
-    
-    public void searchMethod(){
-        
-    }
-    public void bookFlight(){
-        
-    }
-    public void cancelBookedFlight(){
-        
-    }
-    public void editBookedFlight(){
-        
-    }
-    public Flight viewBookedFlight(){
-        
-        return null;
-    }
-    
-    public ArrayList<Flight> viewFlighthistory(){
-        return null;
-    }
-    public void createFeedback(){
-        
-    }
-
-    public void Notify(){
-        
     }
 }

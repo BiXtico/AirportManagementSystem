@@ -5,7 +5,8 @@
  */
 package AMS;
 
-import AMS.Interfaces.SystemManagerInterface;
+import AMS.Interfaces.PassengerInterface;
+import AMS.ResevationSubSystem.Passenger;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
@@ -43,21 +44,20 @@ public class DB_SC_Manager {
         }
     }
     
-    public void RegisterSystemManager(){
+    public void RegisterPassenger(){
          try {
             // My remote object [Skeleton]
-            SystemManagerInterface sm = new SystemManager();
+            PassengerInterface PI = (PassengerInterface) new Passenger();
             // My RMI Registry
             Registry registry = LocateRegistry.createRegistry(1099);
 
             //Add my object to the RMI Registry
-            registry.bind("ss", sm);
-            System.out.println("My calculator is ready...");
+            registry.bind("Passenger", PI);
+            System.out.println("Passenger Registered....");
         } catch (AlreadyBoundException | RemoteException ex) {
-            System.out.println("Exception occured, problem connecting the server main.");
+            System.out.println("Exception occured, problem connecting RegisterPassenger.");
         }
     }
-    
     public static MongoClient getMongoClient() {
         return mongoClient;
     }
