@@ -1,6 +1,6 @@
-*/AMSClient/build
-*/AMSClient/dist
-*/AMSClient/nbproject
-*/AMSClient/test
-*/AMSClient/build.xml
-*/manifest.mf
+AMSClient/build
+AMSClient/dist
+AMSClient/nbproject
+AMSClient/test
+AMSClient/build.xml
+AMSClient/manifest.mf
