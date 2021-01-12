@@ -9,6 +9,23 @@ package AMS;
  *
  * @author mahmo
  */
-public class User {
+public class User  {
 
+    private int userID,age,SSN;
+    private String username,email;
+
+    public User() {
+        
+    }
+
+    public User(int userID, int age, int SSN, String username, String email) { 
+        this.userID = userID;
+        this.age = age;
+        this.SSN = SSN;
+        this.username = username;
+        this.email = email;
+    }
+    
+    
+    
 }
