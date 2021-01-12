@@ -27,13 +27,14 @@ import org.bson.Document;
 public class DB_SC_Manager {
     
      private static MongoClient mongoClient;
-
+     private static MongoCollection<Document> Passengers;
     
     public DB_SC_Manager(){
         String connectionString = "mongodb+srv://Admin:ydv4FZVwlrw5fAOF@ams.ff92t.mongodb.net/<dbname>?retryWrites=true&w=majority";
         Logger.getLogger("org.mongodb.driver").setLevel(Level.WARNING);
         try {
             mongoClient = new MongoClient(new MongoClientURI(connectionString));
+            Passengers = DB_SC_Manager.getMongoClient().getDatabase("AMS").getCollection("Passenger");
             MongoIterable<String> mc = mongoClient.listDatabaseNames();
             MongoCursor<String> cursor = mc.cursor();
             while (cursor.hasNext()) {
@@ -60,6 +61,10 @@ public class DB_SC_Manager {
     }
     public static MongoClient getMongoClient() {
         return mongoClient;
+    }
+
+    public static MongoCollection<Document> getPassengers() {
+        return Passengers;
     }
     
     

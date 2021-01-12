@@ -6,84 +6,118 @@
 package AMS.ResevationSubSystem;
 
 import AMS.FlightManagementSubSystem.Flight;
+import AMS.ResevationSubSystem.BillingAccount;
+import AMS.DB_SC_Manager;
+import AMS.Interfaces.PassengerInterface;
+import AMS.User;
+import com.mongodb.client.MongoCollection;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import org.bson.Document;
 
 
 /**
  *
  * @author mahmo
  */
-public class Passenger {
+public class Passenger extends User implements PassengerInterface {
     private String status,nationality;
     private BillingAccount billingAcc;
     private ArrayList<Booking> bookings;
 
     public Passenger() {
     }
-
-    public Passenger(String nationality, BillingAccount billingAcc, ArrayList<Booking> bookings) {
+                
+    public Passenger(int userID, int age, int SSN, String username, String email,String nationality) throws RemoteException{
+        super(userID, age, SSN, username, email);
+        UnicastRemoteObject.exportObject(this, 0);
+        Document doc = new Document("userID", userID)
+                .append("age",age)
+                .append("SSN", SSN)
+                .append("username", username)
+                .append("nationality", nationality).append("billingAccount", null)
+                .append("bookings", null);
+        DB_SC_Manager.getPassengers().insertOne(doc);
         this.nationality = nationality;
-        this.billingAcc = billingAcc;
-        this.bookings = bookings;
     }
 
-    public String getStatus() {
+    @Override
+    public String getStatus()throws RemoteException {
         return status;
     }
 
-    public String getNationality() {
+    @Override
+    public String getNationality() throws RemoteException{
         return nationality;
     }
 
-    public BillingAccount getBillingAcc() {
+    @Override
+    public BillingAccount getBillingAcc() throws RemoteException{
         return billingAcc;
     }
 
-    public ArrayList<Booking> getBookings() {
+    @Override
+    public ArrayList<Booking> getBookings() throws RemoteException{
         return bookings;
     }
 
-    public void setStatus(String status) {
+    @Override
+    public void setStatus(String status) throws RemoteException{
         this.status = status;
     }
 
-    public void setNationality(String nationality) {
+    @Override
+    public void setNationality(String nationality) throws RemoteException{
         this.nationality = nationality;
     }
 
-    public void setBillingAcc(BillingAccount billingAcc) {
+    @Override
+    public void setBillingAcc(BillingAccount billingAcc) throws RemoteException{
         this.billingAcc = billingAcc;
     }
 
-    public void setBookings(ArrayList<Booking> bookings) {
+    @Override
+    public void setBookings(ArrayList<Booking> bookings) throws RemoteException{
         this.bookings = bookings;
     }
     
-    public void searchMethod(){
+    @Override
+    public void searchMethod() throws RemoteException{
         
     }
-    public void bookFlight(){
+    @Override
+    public void bookFlight() throws RemoteException{
         
     }
-    public void cancelBookedFlight(){
+    @Override
+    public void cancelBookedFlight() throws RemoteException{
         
     }
-    public void editBookedFlight(){
+    @Override
+    public void editBookedFlight() throws RemoteException{
         
     }
-    public Flight viewBookedFlight(){
+    @Override
+    public Flight viewBookedFlight() throws RemoteException{
         
         return null;
     }
     
-    public ArrayList<Flight> viewFlighthistory(){
+    @Override
+    public ArrayList<Flight> viewFlighthistory() throws RemoteException{
         return null;
     }
-    public void createFeedback(){
+    @Override
+    public void createFeedback() throws RemoteException{
         
     }
 
-    public void Notify(){
+    @Override
+    public void Notify() throws RemoteException{
         
     }
 }
