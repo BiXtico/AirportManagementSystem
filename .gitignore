@@ -1,6 +1,16 @@
 AMSClient\nbproject\private\private.properties
 AMSServer\nbproject\project.properties
 AMSServer\nbproject\private\private.properties
+AMSClient\build
+AMSClient\dist
+AMSClient\nbproject
+AMSClient\test
+AMSClient\build.xml
+manifest.mf
+
+
+
+
 
 
 
