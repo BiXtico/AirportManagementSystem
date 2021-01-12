@@ -31,7 +31,26 @@ public class Passenger extends User implements PassengerInterface {
 
     public Passenger() {
     }
-                
+         
+      public Passenger(int userID, int age, int SSN, String username, String email,String nationality, BillingAccount billingAcc, ArrayList<Booking> bookings) throws RemoteException{
+        super(userID, age, SSN, username, email);
+        UnicastRemoteObject.exportObject((Remote) this, 0);
+        this.nationality = nationality;
+        this.billingAcc = billingAcc;
+        this.bookings = bookings;
+        List<Integer> books = new ArrayList<>();
+        bookings.forEach((i) -> {
+            books.add(i.getBookingID());
+        });
+        Document doc = new Document("userID", userID)
+                .append("age",age)
+                .append("SSN", SSN)
+                .append("username", username)
+                .append("nationality", nationality)
+                .append("billingAccount", billingAcc.getAccountID())
+                .append("bookings",books);          
+        DB_SC_Manager.getPassengers().insertOne(doc);
+    }
     public Passenger(int userID, int age, int SSN, String username, String email,String nationality) throws RemoteException{
         super(userID, age, SSN, username, email);
         UnicastRemoteObject.exportObject(this, 0);
