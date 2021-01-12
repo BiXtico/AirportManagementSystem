@@ -32,20 +32,22 @@ public class Passenger extends User implements PassengerInterface {
     public Passenger() {
     }
          
-      public Passenger(int userID, int age, int SSN, String username, String email,String nationality, BillingAccount billingAcc, ArrayList<Booking> bookings) throws RemoteException{
+      public Passenger(int userID, int age, int SSN, String username,String status, String email,String nationality, BillingAccount billingAcc, ArrayList<Booking> bookings) throws RemoteException{
         super(userID, age, SSN, username, email);
         UnicastRemoteObject.exportObject((Remote) this, 0);
         this.nationality = nationality;
+        this.status = status;
         this.billingAcc = billingAcc;
         this.bookings = bookings;
         List<Integer> books = new ArrayList<>();
-        bookings.forEach((i) -> {
+        this.bookings.forEach((i) -> {
             books.add(i.getBookingID());
         });
         Document doc = new Document("userID", userID)
                 .append("age",age)
                 .append("SSN", SSN)
                 .append("username", username)
+                .append("status",status)
                 .append("nationality", nationality)
                 .append("billingAccount", billingAcc.getAccountID())
                 .append("bookings",books);          
@@ -58,6 +60,7 @@ public class Passenger extends User implements PassengerInterface {
                 .append("age",age)
                 .append("SSN", SSN)
                 .append("username", username)
+                .append("status", null)
                 .append("nationality", nationality).append("billingAccount", null)
                 .append("bookings", null);
         DB_SC_Manager.getPassengers().insertOne(doc);
