@@ -10,6 +10,31 @@ package AMS.FlightManagementSubSystem;
  * @author mahmo
  */
 public class Flight {
+    String destination,airline;
+
+    public Flight(String destination, String airline) {
+        this.destination = destination;
+        this.airline = airline;
+    }
+
+    public Flight() {
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public String getAirline() {
+        return airline;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public void setAirline(String airline) {
+        this.airline = airline;
+    }
     
 
     

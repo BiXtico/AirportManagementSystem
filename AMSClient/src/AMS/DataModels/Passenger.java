@@ -5,6 +5,7 @@
  */
 package AMS.DataModels;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -12,13 +13,18 @@ import java.util.ArrayList;
  *
  * @author mahmo
  */
-public class Passenger {
+public class Passenger extends User implements Serializable{
     private String status,nationality;
     private BillingAccount billingAcc;
     private ArrayList<Booking> bookings;
 
+    public Passenger(int userID, int SSN) {
+       super(userID, SSN);
+    }
+
     public Passenger() {
     }
+
 
     public Passenger(String nationality, BillingAccount billingAcc, ArrayList<Booking> bookings) {
         this.nationality = nationality;

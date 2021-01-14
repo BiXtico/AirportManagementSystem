@@ -1,15 +1,17 @@
 
 package AMS.ResevationSubSystem;
 
+import org.bson.codecs.pojo.annotations.BsonProperty;
+
 
 public class BillingAccount {
     private int AccountID;
-    private float balance;
+    private double balance;
 
     public BillingAccount() {
     }
 
-    public BillingAccount(int AccountID, float balance) {
+    public BillingAccount(int AccountID, double balance) {
         this.AccountID = AccountID;
         this.balance = balance;
     }
@@ -18,7 +20,7 @@ public class BillingAccount {
         return AccountID;
     }
 
-    public float getBalance() {
+    public double getBalance() {
         return balance;
     }
 
@@ -26,7 +28,7 @@ public class BillingAccount {
         this.AccountID = AccountID;
     }
 
-    public void setBalance(float balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
     }
     
