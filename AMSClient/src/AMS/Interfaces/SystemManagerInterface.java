@@ -7,8 +7,10 @@ import java.rmi.RemoteException;
 
 public interface SystemManagerInterface extends Remote{
     
-    //example code
-    public int add(int x, int y) throws RemoteException;
-    //example code
-    public int sub(int x, int y) throws RemoteException ;
+    public void createAccount() throws RemoteException ;
+    public void createBillingAccount() throws RemoteException ;
+    public void refundPayment() throws RemoteException ;
+    public void assignPassengerGate() throws RemoteException ;
+    public void assignPlane() throws RemoteException ; 
+    public void assignFlightStaff() throws RemoteException ;  
 }

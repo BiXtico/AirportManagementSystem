@@ -31,6 +31,8 @@ public class Passenger extends User implements PassengerInterface {
 
     public Passenger() {
     }
+
+    
          
       public Passenger(int userID, int age, int SSN, String username,String status, String email,String nationality, BillingAccount billingAcc, ArrayList<Booking> bookings) throws RemoteException{
         super(userID, age, SSN, username, email);

@@ -26,6 +26,10 @@ public class User  {
         this.email = email;
     }
     
+    public User (String username, int SSN){
+      this.username= username;
+      this.SSN = SSN;
+    }
     
     
 }

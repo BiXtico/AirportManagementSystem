@@ -50,7 +50,7 @@ public class DB_SC_Manager {
             // My remote object [Skeleton]
             PassengerInterface PI = (PassengerInterface) new Passenger();
             // My RMI Registry
-            Registry registry = LocateRegistry.createRegistry(1099);
+            Registry registry = LocateRegistry.createRegistry(1082);
 
             //Add my object to the RMI Registry
             registry.bind("Passenger", PI);
