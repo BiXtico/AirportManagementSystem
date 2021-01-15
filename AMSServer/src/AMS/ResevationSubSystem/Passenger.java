@@ -145,8 +145,8 @@ public class Passenger extends User implements PassengerInterface {
     }   
 
     @Override
-    public void bookFlight(int bookingID, int numOfSeats, String bookingDate) throws RemoteException {
-        Booking newBook = new Booking(bookingID, numOfSeats, bookingDate);
+    public void bookFlight(int numOfSeats, String bookingDate, String Destination) throws RemoteException {
+        Booking newBook = new Booking(DB_SC_Manager.getID_Counter(), numOfSeats, bookingDate);
         this.bookings.add(newBook);
     }
 
@@ -177,12 +177,12 @@ public class Passenger extends User implements PassengerInterface {
     }
 
     @Override
-    public ArrayList<Booking> viewBookedFlights() throws RemoteException {
-        return this.bookings;
+    public String viewBookedFlights() throws RemoteException {
+        return " ";
     }
 
     @Override
-    public void createFeedback() throws RemoteException {
+    public void createFeedback(String Feedback, int FlightID) throws RemoteException {
         Feedback feedback = new Feedback();
     }
 

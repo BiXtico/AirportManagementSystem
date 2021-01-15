@@ -48,8 +48,11 @@ public final class DB_SC_Manager {
     private static ArrayList<ManagementEmployee> ManagmentEmployees_S;
     private static ArrayList<Flight> Flights_S;
     private static ArrayList<Pilot> Pilots_S;
+    private static int ID_Counter;
+    private static int ID_Counter_ID;
 
     private static MongoClient mongoClient;
+    private static MongoCollection<Document> IDCounter;
     private static MongoCollection<Document> Passengers;
     private static MongoCollection<Document> BilligAccounts;
     private static MongoCollection<Document> Feedbacks;
@@ -66,6 +69,7 @@ public final class DB_SC_Manager {
         Logger.getLogger("org.mongodb.driver").setLevel(Level.WARNING);
         try {
             mongoClient = new MongoClient(new MongoClientURI(connectionString));
+            IDCounter = DB_SC_Manager.getMongoClient().getDatabase("AMS").getCollection("IDCounter");
             Passengers = DB_SC_Manager.getMongoClient().getDatabase("AMS").getCollection("Passenger");
             BilligAccounts = DB_SC_Manager.getMongoClient().getDatabase("AMS").getCollection("BillingAccount");
             Feedbacks = DB_SC_Manager.getMongoClient().getDatabase("AMS").getCollection("Feedback");
@@ -101,16 +105,16 @@ public final class DB_SC_Manager {
 
     public static void UpdatePassengers() throws RemoteException {
         List<Integer> bb = new ArrayList<>();
-        for(Passenger p: Passengers_S){
+        for (Passenger p : Passengers_S) {
             Passengers.findOneAndUpdate(new Document("userID", p.getUserID()), set("status", p.getStatus()));
             Passengers.findOneAndUpdate(new Document("userID", p.getUserID()), set("age", p.getAge()));
             Passengers.findOneAndUpdate(new Document("userID", p.getUserID()), set("SSN", p.getSSN()));
             Passengers.findOneAndUpdate(new Document("userID", p.getUserID()), set("nationality", p.getNationality()));
             Passengers.findOneAndUpdate(new Document("userID", p.getUserID()), set("AccountID", p.getBillingAcc().getAccountID()));
-            for(Booking b :p.getBookings()){
+            for (Booking b : p.getBookings()) {
                 bb.add(b.getBookingID());
             }
-            Passengers.findOneAndUpdate(new Document("bookings",p.getUserID()), set("bookings", bb));
+            Passengers.findOneAndUpdate(new Document("bookings", p.getUserID()), set("bookings", bb));
         }
     }
 
@@ -129,12 +133,12 @@ public final class DB_SC_Manager {
                 p.setUsername(i.getString("username"));
                 p.setNationality(i.getString("nationality"));
                 AI = i.getInteger("AccountID");
-                for(BillingAccount b:BilligAccounts_S){
-                    if(b.getAccountID() == AI){
+                for (BillingAccount b : BilligAccounts_S) {
+                    if (b.getAccountID() == AI) {
                         acc = b;
                         break;
                     }
-                }    
+                }
                 List<Integer> books = (List<Integer>) i.get("bookings");
                 for (int j : books) {
                     for (Booking k : Bookings_S) {
@@ -153,13 +157,23 @@ public final class DB_SC_Manager {
         }
     }
 
+    public static void readCounter() throws RemoteException {
+        Document document = (Document) IDCounter;
+        ID_Counter_ID = document.getInteger("IDCounter_ID");
+        ID_Counter = document.getInteger("IDCounter");
+    }
+
+    public static void UpdateCounter() throws RemoteException {
+        IDCounter.findOneAndUpdate(new Document("ID_Counter_ID", ID_Counter_ID), set("counter", ID_Counter));
+    }
+
     public void RegisterPassenger() {
         try {
             Registry registry = LocateRegistry.createRegistry(1099);
             // My remote object [Skeleton]
-            for(int i =0;i<Passengers_S.size();i++){
-                PassengerInterface PI = (PassengerInterface)Passengers_S.get(i) ;
-                registry.bind("pass" +i, PI);
+            for (int i = 0; i < Passengers_S.size(); i++) {
+                PassengerInterface PI = (PassengerInterface) Passengers_S.get(i);
+                registry.bind("pass" + i, PI);
             }
             System.out.println("Passenger Registered....");
         } catch (AlreadyBoundException | RemoteException ex) {
@@ -170,7 +184,6 @@ public final class DB_SC_Manager {
     public static MongoClient getMongoClient() {
         return mongoClient;
     }
-    
 
     public static MongoCollection<Document> getPassengers() {
         return Passengers;
@@ -250,6 +263,18 @@ public final class DB_SC_Manager {
 
     public static MongoCollection<Document> getBookings() {
         return Bookings;
+    }
+
+    public static int getID_Counter() {
+        return ID_Counter;
+    }
+
+    public static int getID_Counter_ID() {
+        return ID_Counter_ID;
+    }
+
+    public static MongoCollection<Document> getIDCounter() {
+        return IDCounter;
     }
 
     

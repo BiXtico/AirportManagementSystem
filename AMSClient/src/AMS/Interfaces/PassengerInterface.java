@@ -5,10 +5,8 @@
  */
 package AMS.Interfaces;
 
-import AMS.DataModels.Flight;
 import AMS.DataModels.BillingAccount;
 import AMS.DataModels.Booking;
-import AMS.DataModels.SearchStrategy;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -35,17 +33,17 @@ public interface PassengerInterface extends Remote {
 
     public void setBookings(ArrayList<Booking> bookings) throws RemoteException;
 
-    public void bookFlight(int bookingID, int numOfSeats, String bookingDate) throws RemoteException;
+    public void bookFlight(int numOfSeats, String bookingDate, String Destination) throws RemoteException;
 
     public void cancelBookedFlight(String Destination) throws RemoteException;
 
     public void editBookedFlight(int bookingID, int numOfSeats) throws RemoteException;
 
-    public ArrayList<Booking> viewBookedFlights() throws RemoteException;
+    public String viewBookedFlights() throws RemoteException;
 
     public String searchMethod(String Searchable,int num) throws RemoteException;
 
-    public void createFeedback() throws RemoteException;
+    public void createFeedback(String Feedback, int FlightID) throws RemoteException;
 
     public void Notify() throws RemoteException;
 

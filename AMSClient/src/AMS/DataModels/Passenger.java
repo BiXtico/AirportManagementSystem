@@ -5,61 +5,44 @@
  */
 package AMS.DataModels;
 
-import java.io.Serializable;
+import AMS.Interfaces.PassengerInterface;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-
+import java.util.List;
 
 /**
  *
  * @author mahmo
  */
-public class Passenger extends User implements Serializable{
-    private String status,nationality;
+public class Passenger extends User {
+
+    private String status, nationality;
     private BillingAccount billingAcc;
     private ArrayList<Booking> bookings;
-
-    public Passenger(int userID, int SSN) {
-       super(userID, SSN);
+    
+    public Passenger() throws RemoteException {
+        UnicastRemoteObject.exportObject((Remote) this, 0);
     }
 
-    public Passenger() {
-    }
-
-
-    public Passenger(String nationality, BillingAccount billingAcc, ArrayList<Booking> bookings) {
+    public Passenger(int userID, int age, int SSN, String username, String status, String email, String nationality, BillingAccount billingAcc, ArrayList<Booking> bookings) throws RemoteException {
+        super(userID, age, SSN, username, email);
+        UnicastRemoteObject.exportObject((Remote) this, 0);
         this.nationality = nationality;
-        this.billingAcc = billingAcc;
-        this.bookings = bookings;
-    }
-        public String getStatus() {
-        return status;
-    }
-
-    public String getNationality() {
-        return nationality;
-    }
-
-    public BillingAccount getBillingAcc() {
-        return billingAcc;
-    }
-
-    public ArrayList<Booking> getBookings() {
-        return bookings;
-    }
-
-    public void setStatus(String status) {
         this.status = status;
-    }
-
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
-    }
-
-    public void setBillingAcc(BillingAccount billingAcc) {
         this.billingAcc = billingAcc;
+        this.bookings = bookings;
+       
     }
 
-    public void setBookings(ArrayList<Booking> bookings) {
-        this.bookings = bookings;
+    public Passenger(int userID, int age, int SSN, String username, String email, String nationality) throws RemoteException {
+        super(userID, age, SSN, username, email);
+        UnicastRemoteObject.exportObject((Remote) this, 0);
+        this.nationality = nationality;
+        this.billingAcc = null;
+        this.bookings = null;
     }
+
+    
 }

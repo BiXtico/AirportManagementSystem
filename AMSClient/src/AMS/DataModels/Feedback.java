@@ -4,13 +4,47 @@
  * and open the template in the editor.
  */
 package AMS.DataModels;
-
 /**
  *
  * @author mahmo
  */
 public class Feedback {
 
-  
-  
+    int feedbackID;
+    String description;
+    int rating;
+
+    public Feedback() {
+    }
+
+    public Feedback(int feedbackID, String description, int rating) {
+        this.feedbackID = feedbackID;
+        this.description = description;
+        this.rating = rating;
+    }
+
+    public int getFeedbackID() {
+        return feedbackID;
+    }
+
+    public void setFeedbackID(int feedbackID) {
+        this.feedbackID = feedbackID;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
 }

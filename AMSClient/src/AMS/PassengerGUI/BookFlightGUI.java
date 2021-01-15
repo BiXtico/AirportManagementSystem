@@ -5,6 +5,7 @@ import AMS.Controllers.PassengerController;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 
 public class BookFlightGUI extends javax.swing.JFrame {
@@ -123,12 +124,21 @@ public class BookFlightGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_NumOfSeatsFieldActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int numofseats;
+        int numofseats = 0;
         String date,Destination;
         numofseats = Integer.parseInt(NumOfSeatsField.getText());
         date = DateField.getText();
         Destination = DestinationField.getText();
-        PassengerController.bookFlight_();
+        if(date !=null && Destination !=null && numofseats != 0){
+        try {
+            PassengerController.bookflight(numofseats, date, Destination);
+        } catch (RemoteException ex) {
+            Logger.getLogger(BookFlightGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }else {
+            JOptionPane.showMessageDialog(null, "Alert:Please valid options", "Message",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed

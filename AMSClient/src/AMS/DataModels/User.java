@@ -9,10 +9,9 @@ package AMS.DataModels;
  *
  * @author mahmo
  */
-public class User{
+public class User {
 
-    int userID;
- private int age, SSN;
+    private int userID, age, SSN;
     private String username, email;
 
     public User() {
@@ -65,10 +64,6 @@ public class User{
         this.SSN = SSN;
         this.username = username;
         this.email = email;
-    }
-     public User(int userID, int SSN) {
-        this.userID = userID;
-        this.SSN = SSN;
     }
 
 }
