@@ -1,26 +1,32 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package AMS.PlaneManagementSubSystem;
 
-/**
- *
- * @author mahmo
- */
+
+import AMS.DB_SC_Manager;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import org.bson.Document;
+
 public class Plane {
     private int planeID;
     private int planeCapacity;
     private PlaneSlot slot;
 
-    public Plane() {
+    public Plane()throws RemoteException{
+         UnicastRemoteObject.exportObject((Remote) this, 0);
+
     }
 
     public Plane(int planeID, int planeCapacity, PlaneSlot slot) {
         this.planeID = planeID;
         this.planeCapacity = planeCapacity;
         this.slot = slot;
+        Document doc = new Document("planeID", planeID)
+        .append("planeCapacity", planeCapacity)
+        .append("slotID", slot);
+        DB_SC_Manager.getPlanes().insertOne(doc);
+        DB_SC_Manager.getPlanes_S().add(this);
     }
 
     public int getPlaneID() {
@@ -46,5 +52,5 @@ public class Plane {
     public void setSlot(PlaneSlot slot) {
         this.slot = slot;
     }
-    
+
 }

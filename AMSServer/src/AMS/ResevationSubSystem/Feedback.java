@@ -6,27 +6,32 @@
 package AMS.ResevationSubSystem;
 
 import AMS.DB_SC_Manager;
-import com.mongodb.client.MongoCollection;
-import java.util.ArrayList;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import org.bson.Document;
 
-/**
- *
- * @author mahmo
- */
+
 public class Feedback {
+int feedbackID;
+String description;
+int rating;
 
-    int feedbackID;
-    String description;
-    int rating;
-
-    public Feedback() {
+    public Feedback() throws RemoteException{
+        UnicastRemoteObject.exportObject((Remote) this, 0);
     }
 
     public Feedback(int feedbackID, String description, int rating) {
+
         this.feedbackID = feedbackID;
         this.description = description;
         this.rating = rating;
+        Document doc = new Document("feedbackID", feedbackID)
+                .append("description", description)
+                .append("rating", rating);
+
+        DB_SC_Manager.getFeedbacks().insertOne(doc);
+        DB_SC_Manager.getFeedbacks_S().add(this);
     }
 
     public int getFeedbackID() {
@@ -36,6 +41,8 @@ public class Feedback {
     public void setFeedbackID(int feedbackID) {
         this.feedbackID = feedbackID;
     }
+
+
 
     public String getDescription() {
         return description;

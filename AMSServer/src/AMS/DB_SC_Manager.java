@@ -118,6 +118,79 @@ public final class DB_SC_Manager {
         }
     }
 
+    
+     public static void readFlights() throws RemoteException {
+        Flight f = new Flight();
+        Plane plane=new Plane();
+        Gate gate=new Gate();
+        Pilot pilot=new Pilot();
+        ArrayList<Booking> B = new ArrayList<>();
+        ArrayList<Feedback> feedbackList=new ArrayList<>();
+        int PI = 0;
+        int GI=0;
+        int pilotID=0;
+        try {
+            ArrayList<Document> docs = Flights.find().into(new ArrayList<>());
+            for (Document i : docs) {
+                f.setAirline(i.getString("airline"));
+                f.setDepartureDate(i.getString("departureDate"));
+                f.setDepartureTime(i.getString("departureTime"));
+                f.setDestination(i.getString("destination"));
+                f.setFlightID(i.getInteger("flightID"));
+                f.setGate(gate);
+                f.setPilot(pilot);
+                f.setPlane(plane);
+                PI = i.getInteger("planeID");
+                GI=i.getInteger("gateID");
+                pilotID=i.getInteger("pilotID");
+                for(Plane p:Planes_S){
+                    if(p.getPlaneID() == PI){
+                        plane = p;
+                        break;
+                    }
+                }  
+                for(Gate g:Gates_S){
+                    if(g.getGateNum() == GI){
+                        gate = g;
+                        break;
+                    }
+                } 
+                for(Pilot P:Pilots_S){
+                    if(P.getPilotID() == pilotID){
+                        pilot = P;
+                        break;
+                    }
+                } 
+                List<Integer> books = (List<Integer>) i.get("bookings");
+                for (int j : books) {
+                    for (Booking k : Bookings_S) {
+                        if (k.getBookingID() == j) {
+                            B.add(k);
+                            break;
+                        }
+                    }
+                }
+                List<Integer> feed = (List<Integer>) i.get("feedbackList");
+                for (int j : feed) {
+                    for (Feedback F : Feedbacks_S) {
+                        if (F.getFeedbackID() == j) {
+                            feedbackList.add(F);
+                            break;
+                        }
+                    }
+                }
+                f.setPlane(plane);
+                f.setGate(gate);
+                f.setPilot(pilot);
+                f.setBookings(B);
+                f.setFeedbackList(feedbackList);
+                Flights_S.add(f);
+            }
+        } catch (RemoteException ex) {
+            System.out.print("Error reading files form mongoose");
+        }
+    }
+
     public static void readPassengers() throws RemoteException {
         Passenger p = new Passenger();
         BillingAccount acc = new BillingAccount();
@@ -154,6 +227,49 @@ public final class DB_SC_Manager {
             }
         } catch (RemoteException ex) {
             System.out.print("Error reading files form mongoose");
+        }
+    }
+    
+    public static void UpdateFlights() throws RemoteException {
+        List<Integer> bb = new ArrayList<>();
+        List<Integer> fb = new ArrayList<>();
+        for(Flight f: Flights_S){
+            Flights.findOneAndUpdate(new Document("flightID", f.getFlightID()), set("airline", f.getAirline()));
+            Flights.findOneAndUpdate(new Document("flightID", f.getFlightID()), set("departureDate", f.getDepartureDate()));
+            Flights.findOneAndUpdate(new Document("flightID", f.getFlightID()), set("departureTime", f.getDepartureTime()));
+            Flights.findOneAndUpdate(new Document("flightID", f.getFlightID()), set("destination", f.getDestination()));
+            Flights.findOneAndUpdate(new Document("flightID", f.getFlightID()), set("planeID", f.getPlane().getPlaneID()));
+            Flights.findOneAndUpdate(new Document("flightID", f.getFlightID()), set("pilotID", f.getPilot().getPilotID()));
+            Flights.findOneAndUpdate(new Document("flightID", f.getFlightID()), set("gateID", f.getGate().getGateNum()));
+            for(Booking b :f.getBookings()){
+                bb.add(b.getBookingID());
+            }
+            for(Feedback ff :f.getFeedbackList()){
+                fb.add(ff.getFeedbackID());
+            }
+            Flights.findOneAndUpdate(new Document("bookings",f.getFlightID()), set("bookings", bb));
+            Flights.findOneAndUpdate(new Document("feedbackList",f.getFlightID()), set("feedbackList", fb));
+        }
+    }
+    public static void readGates() throws RemoteException {
+        Gate g = new Gate();
+
+        try {
+            ArrayList<Document> docs = Gates.find().into(new ArrayList<>());
+            for (Document i : docs) {
+                g.setGateNum(i.getInteger("gateNum"));
+                g.setIsAvailable(i.getBoolean("isAvailable"));
+                
+                Gates_S.add(g);
+            }
+        } catch (RemoteException ex) {
+            System.out.print("Error reading files form mongoose");
+        }
+    }
+    public static void UpdateGates() throws RemoteException {
+
+        for(Gate g: Gates_S){
+            Gates.findOneAndUpdate(new Document("gateNum", g.getGateNum()), set("isAvailable", g.isIsAvailable()));
         }
     }
 
