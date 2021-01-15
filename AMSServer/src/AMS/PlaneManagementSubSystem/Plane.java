@@ -10,5 +10,41 @@ package AMS.PlaneManagementSubSystem;
  * @author mahmo
  */
 public class Plane {
+    private int planeID;
+    private int planeCapacity;
+    private PlaneSlot slot;
+
+    public Plane() {
+    }
+
+    public Plane(int planeID, int planeCapacity, PlaneSlot slot) {
+        this.planeID = planeID;
+        this.planeCapacity = planeCapacity;
+        this.slot = slot;
+    }
+
+    public int getPlaneID() {
+        return planeID;
+    }
+
+    public void setPlaneID(int planeID) {
+        this.planeID = planeID;
+    }
+
+    public int getPlaneCapacity() {
+        return planeCapacity;
+    }
+
+    public void setPlaneCapacity(int planeCapacity) {
+        this.planeCapacity = planeCapacity;
+    }
+
+    public PlaneSlot getSlot() {
+        return slot;
+    }
+
+    public void setSlot(PlaneSlot slot) {
+        this.slot = slot;
+    }
     
 }

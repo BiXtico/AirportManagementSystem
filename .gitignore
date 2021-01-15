@@ -10,3 +10,8 @@ AMSServer/nbproject
 AMSServer/test
 AMSServer/build.xml
 AMSServer/manifest.mf
+/prog/AMSClient/dist/
+/prog/AMSClient/nbproject/private/
+/prog/AMSServer/build/
+/prog/AMSServer/dist/
+/prog/AMSServer/nbproject/private/

@@ -5,6 +5,12 @@
  */
 package AMS;
 
+import AMS.Controllers.PassengerController;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author mahmo
@@ -28,21 +34,21 @@ public class LoginGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jTextField1 = new javax.swing.JTextField();
+        usernameField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jButton2 = new javax.swing.JButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        SignInButton = new javax.swing.JButton();
+        PasswordField = new javax.swing.JPasswordField();
+        SignUpButton = new javax.swing.JButton();
+        RadioCustomer = new javax.swing.JRadioButton();
+        RadioEmployee = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        usernameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                usernameFieldActionPerformed(evt);
             }
         });
 
@@ -55,23 +61,28 @@ public class LoginGUI extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setText("Password");
 
-        jButton1.setText("Sign In");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        SignInButton.setText("Sign In");
+        SignInButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                SignInButtonActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Sign Up");
-
-        jRadioButton1.setText("Customer");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        SignUpButton.setText("Sign Up");
+        SignUpButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                SignUpButtonActionPerformed(evt);
             }
         });
 
-        jRadioButton2.setText("Employee");
+        RadioCustomer.setText("Customer");
+        RadioCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadioCustomerActionPerformed(evt);
+            }
+        });
+
+        RadioEmployee.setText("Employee");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -81,19 +92,19 @@ public class LoginGUI extends javax.swing.JFrame {
                 .addGap(83, 83, 83)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
+                        .addComponent(RadioCustomer)
                         .addGap(18, 18, 18)
-                        .addComponent(jRadioButton2))
+                        .addComponent(RadioEmployee))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(jButton1)
+                            .addComponent(SignInButton)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                            .addComponent(jButton2))
+                            .addComponent(SignUpButton))
                         .addComponent(jLabel3)
                         .addComponent(jLabel2)
-                        .addComponent(jTextField1)
+                        .addComponent(usernameField)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jPasswordField1)))
+                        .addComponent(PasswordField)))
                 .addContainerGap(98, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -104,36 +115,69 @@ public class LoginGUI extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton1))
+                    .addComponent(RadioEmployee)
+                    .addComponent(RadioCustomer))
                 .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(SignInButton)
+                    .addComponent(SignUpButton))
                 .addContainerGap(160, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void usernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_usernameFieldActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void SignInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignInButtonActionPerformed
+        String username;
+        int password;
+        username = usernameField.getText();
+        password = Integer.parseInt(new String(PasswordField.getPassword()));
+        if(username != null){
+        if (RadioCustomer.isSelected() && RadioEmployee.isSelected()){
+            JOptionPane.showMessageDialog(null ,"Alert: Please pick only one option to login","Message",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }else if (RadioCustomer.isSelected()){
+            try {
+                PassengerController.LookupPassenger(username, password);
+                if(PassengerController.getCurrentP() == null) 
+                    JOptionPane.showMessageDialog(null,"Alert: Wrong username or password","Message",
+                            JOptionPane.INFORMATION_MESSAGE);
+                else{
+                    PassengerController.invokeMainPage();
+                    this.dispose();
+                }
+            } catch (RemoteException ex) {
+                    JOptionPane.showMessageDialog(null, "Alert: can't find the user","Message",
+                            JOptionPane.INFORMATION_MESSAGE);
+            }
+        }else if (RadioEmployee.isSelected()){
+            //do the Employee
+        }
+        }else{
+            JOptionPane.showMessageDialog(null,"Alert: Wrong username or password","Message",
+                            JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_SignInButtonActionPerformed
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void RadioCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadioCustomerActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    }//GEN-LAST:event_RadioCustomerActionPerformed
+
+    private void SignUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignUpButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SignUpButtonActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -171,15 +215,15 @@ public class LoginGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPasswordField PasswordField;
+    private javax.swing.JRadioButton RadioCustomer;
+    private javax.swing.JRadioButton RadioEmployee;
+    private javax.swing.JButton SignInButton;
+    private javax.swing.JButton SignUpButton;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
 }

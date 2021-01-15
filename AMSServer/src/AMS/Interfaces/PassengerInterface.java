@@ -8,6 +8,7 @@ package AMS.Interfaces;
 import AMS.FlightManagementSubSystem.Flight;
 import AMS.ResevationSubSystem.BillingAccount;
 import AMS.ResevationSubSystem.Booking;
+import AMS.ResevationSubSystem.SearchStrategy;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -34,19 +35,25 @@ public interface PassengerInterface extends Remote {
 
     public void setBookings(ArrayList<Booking> bookings) throws RemoteException;
     
-    public void searchMethod() throws RemoteException;
+    public void bookFlight(int bookingID, int numOfSeats, String bookingDate ) throws RemoteException;
     
-    public void bookFlight() throws RemoteException;
+    public void cancelBookedFlight(String Destination) throws RemoteException;
     
-    public void cancelBookedFlight() throws RemoteException;
+    public void editBookedFlight(int bookingID,int numOfSeats) throws RemoteException;
     
-    public void editBookedFlight() throws RemoteException;
+    public ArrayList<Booking> viewBookedFlights() throws RemoteException;
     
-    public Flight viewBookedFlight() throws RemoteException;
-    
-    public ArrayList<Flight> viewFlighthistory() throws RemoteException;
+    public String searchMethod(String Searchable,int num) throws RemoteException;
     
     public void createFeedback() throws RemoteException;
 
     public void Notify() throws RemoteException;
+    
+    public String getLoginInUsername() throws RemoteException;
+
+    public int getLoginInSSN()throws RemoteException;
+    
+    public String getLoginInEmail() throws RemoteException;
+    
+    
 }
