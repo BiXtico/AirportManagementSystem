@@ -43,7 +43,7 @@ public interface PassengerInterface extends Remote {
     
     public ArrayList<Booking> viewBookedFlights() throws RemoteException;
     
-    public ArrayList<Flight> searchMethod(String Searchable,SearchStrategy s) throws RemoteException;
+    public String searchMethod(String Searchable,int num) throws RemoteException;
     
     public void createFeedback() throws RemoteException;
 

@@ -6,6 +6,7 @@
 package AMS.Controllers;
 
 import AMS.Interfaces.SystemManagerInterface;
+import AMS.LoginGUI;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -29,5 +30,12 @@ public class SystemManagerController {
             System.out.println("Exception occured, Error Client side try connection failed, can't read registery binds");
         }
     }
+    
+    
+    public static void loginInvoke(){
+        LoginGUI login = new LoginGUI();
+        login.setVisible(true);
+    }
+    
     
 }

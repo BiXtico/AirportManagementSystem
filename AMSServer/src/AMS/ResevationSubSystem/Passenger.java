@@ -122,21 +122,25 @@ public class Passenger extends User implements PassengerInterface {
     }
     
     
+    @Override
     public String getLoginInUsername() {
         return this.getUsername();
     }
 
+    @Override
     public int getLoginInSSN() {
         return this.getSSN();
     }
     
+    @Override
     public String getLoginInEmail() {
         return this.getEmail();
     }
     
     @Override
-    public ArrayList<Flight> searchMethod(String searchable, SearchStrategy s) throws RemoteException {
-        str =s;
+    public String searchMethod(String searchable,int num) throws RemoteException {
+        if(num == 1) str = new SearchByDestination();
+        else str = new SearchByAirline();
         return str.searchMethod(searchable);
     }   
 
