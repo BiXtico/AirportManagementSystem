@@ -5,11 +5,13 @@
  */
 package AMS;
 
+import java.io.Serializable;
+
 /**
  *
  * @author mahmo
  */
-public class User {
+public class User implements Serializable  {
 
     private int userID, age, SSN;
     private String username, email;

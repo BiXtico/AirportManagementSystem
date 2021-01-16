@@ -6,6 +6,7 @@
 package AMS;
 
 import AMS.Controllers.PassengerController;
+import AMS.Controllers.AdminController;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,6 +44,7 @@ public class LoginGUI extends javax.swing.JFrame {
         SignUpButton = new javax.swing.JButton();
         RadioCustomer = new javax.swing.JRadioButton();
         RadioEmployee = new javax.swing.JRadioButton();
+        AdminRadio = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -84,6 +86,13 @@ public class LoginGUI extends javax.swing.JFrame {
 
         RadioEmployee.setText("Employee");
 
+        AdminRadio.setText("Admin");
+        AdminRadio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AdminRadioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -91,10 +100,7 @@ public class LoginGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(83, 83, 83)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(RadioCustomer)
-                        .addGap(18, 18, 18)
-                        .addComponent(RadioEmployee))
+                    .addComponent(AdminRadio)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(SignInButton)
@@ -104,7 +110,9 @@ public class LoginGUI extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addComponent(usernameField)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(PasswordField)))
+                        .addComponent(PasswordField)
+                        .addComponent(RadioCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(RadioEmployee, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(98, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -121,14 +129,16 @@ public class LoginGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(PasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(RadioEmployee)
-                    .addComponent(RadioCustomer))
-                .addGap(47, 47, 47)
+                .addComponent(RadioCustomer)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(RadioEmployee)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(AdminRadio)
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SignInButton)
                     .addComponent(SignUpButton))
-                .addContainerGap(160, Short.MAX_VALUE))
+                .addContainerGap(126, Short.MAX_VALUE))
         );
 
         pack();
@@ -143,30 +153,49 @@ public class LoginGUI extends javax.swing.JFrame {
         int password;
         username = usernameField.getText();
         password = Integer.parseInt(new String(PasswordField.getPassword()));
-        if(username != null){
-        if (RadioCustomer.isSelected() && RadioEmployee.isSelected()){
-            JOptionPane.showMessageDialog(null ,"Alert: Please pick only one option to login","Message",
-                    JOptionPane.INFORMATION_MESSAGE);
-        }else if (RadioCustomer.isSelected()){
-            try {
-                PassengerController.LookupPassenger(username, password);
-                if(PassengerController.getCurrentP() == null) 
-                    JOptionPane.showMessageDialog(null,"Alert: Wrong username or password","Message",
+        if (username != null) {
+            if (RadioCustomer.isSelected() && RadioEmployee.isSelected()
+                    || AdminRadio.isSelected() && RadioCustomer.isSelected()
+                    || AdminRadio.isSelected() && RadioEmployee.isSelected()
+                    || RadioCustomer.isSelected() && RadioEmployee.isSelected()
+                    && AdminRadio.isSelected()) {
+                JOptionPane.showMessageDialog(null, "Alert: Please pick only one option to login", "Message",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else if (RadioCustomer.isSelected()) {
+                try {
+                    PassengerController.LookupPassenger(username, password);
+                    if (PassengerController.getCurrentP() == null) {
+                        JOptionPane.showMessageDialog(null, "Alert: Wrong username or password", "Message",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        PassengerController.invokeMainPage();
+                        this.dispose();
+                    }
+                } catch (RemoteException ex) {
+                    JOptionPane.showMessageDialog(null, "Alert: can't find the user", "Message",
                             JOptionPane.INFORMATION_MESSAGE);
-                else{
-                    PassengerController.invokeMainPage();
-                    this.dispose();
                 }
-            } catch (RemoteException ex) {
-                    JOptionPane.showMessageDialog(null, "Alert: can't find the user","Message",
+            } else if (RadioEmployee.isSelected()) {
+                //do the Employee
+            } else if (AdminRadio.isSelected()) {
+                try {
+                    AdminController.LookupAdmin(username, password);
+                    if (AdminController.getCurrentA() == null) {
+                        JOptionPane.showMessageDialog(null, "Alert: Wrong username or password", "Message",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        AdminController.invokeMainPage();
+                        this.dispose();
+                    }
+                } catch (RemoteException ex) {
+                    JOptionPane.showMessageDialog(null, "Alert: can't find Admin", "Message",
                             JOptionPane.INFORMATION_MESSAGE);
+                }
+
             }
-        }else if (RadioEmployee.isSelected()){
-            //do the Employee
-        }
-        }else{
-            JOptionPane.showMessageDialog(null,"Alert: Wrong username or password","Message",
-                            JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Alert: Wrong username or password", "Message",
+                    JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_SignInButtonActionPerformed
 
@@ -178,6 +207,9 @@ public class LoginGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_SignUpButtonActionPerformed
 
+    private void AdminRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdminRadioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AdminRadioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -215,6 +247,7 @@ public class LoginGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton AdminRadio;
     private javax.swing.JPasswordField PasswordField;
     private javax.swing.JRadioButton RadioCustomer;
     private javax.swing.JRadioButton RadioEmployee;

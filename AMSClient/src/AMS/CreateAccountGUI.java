@@ -1,5 +1,5 @@
 
-package AMS.PassengerGUI;
+package AMS;
 
 
 public class CreateAccountGUI extends javax.swing.JFrame {

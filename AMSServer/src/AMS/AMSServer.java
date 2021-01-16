@@ -27,6 +27,6 @@ public class AMSServer {
         bb.add(b3);
 
         BillingAccount b = new BillingAccount();
-        Passenger p = new Passenger(176437, 21, 8787657, "bix", "onBoard", "bix176437@gmail.com", "Egyptian", b, bb);
+       
     }
 }

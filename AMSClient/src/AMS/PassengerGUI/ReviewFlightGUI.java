@@ -27,6 +27,8 @@ public class ReviewFlightGUI extends javax.swing.JFrame {
         ReviewField = new javax.swing.JTextField();
         ReviewFlightButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,6 +53,14 @@ public class ReviewFlightGUI extends javax.swing.JFrame {
             }
         });
 
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Rating");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -62,9 +72,11 @@ public class ReviewFlightGUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel3))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField1)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(backButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
@@ -86,11 +98,15 @@ public class ReviewFlightGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(ReviewField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(ReviewFlightButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(backButton))
-                .addContainerGap(99, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         pack();
@@ -99,11 +115,12 @@ public class ReviewFlightGUI extends javax.swing.JFrame {
     private void ReviewFlightButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReviewFlightButtonActionPerformed
         String review;
         int flightid = 0;
+        int rating = 0;
         review = ReviewField.getText();
         flightid = Integer.parseInt(FlightIDField.getText());
-        if(flightid !=0 && review != null){
+        if(flightid !=0 && review != null && rating!=0){
         try {
-            PassengerController.reviewflight(review, flightid);
+            PassengerController.reviewflight(review, flightid,rating);
         } catch (RemoteException ex) {
             Logger.getLogger(ReviewFlightGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -121,6 +138,10 @@ public class ReviewFlightGUI extends javax.swing.JFrame {
             Logger.getLogger(ManageBookingGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_backButtonActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,5 +186,7 @@ public class ReviewFlightGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

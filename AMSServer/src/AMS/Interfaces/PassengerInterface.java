@@ -35,19 +35,17 @@ public interface PassengerInterface extends Remote {
 
     public void setBookings(ArrayList<Booking> bookings) throws RemoteException;
     
-    public void bookFlight(int numOfSeats, String bookingDate,String Destination ) throws RemoteException;
+    public boolean bookFlight(int numOfSeats, String bookingDate, String Destination) throws RemoteException;
     
-    public void cancelBookedFlight(String Destination) throws RemoteException;
+    public boolean cancelBookedFlight(String Destination) throws RemoteException;
     
-    public void editBookedFlight(int bookingID,int numOfSeats) throws RemoteException;
+    public boolean editBookedFlight(int bookingID, int numOfSeats) throws RemoteException;
     
-    public String viewBookedFlights() throws RemoteException;
+    public ArrayList<Booking> viewBookedFlights() throws RemoteException;
     
-    public String searchMethod(String Searchable,int num) throws RemoteException;
+    public ArrayList<Flight> searchMethod(String searchable,int num)throws RemoteException;
     
-    public void createFeedback(String Feedback, int FlightID) throws RemoteException;
-
-    public void Notify() throws RemoteException;
+    public void createFeedback(String Feedback, int FlightID, int rating)  throws RemoteException;
     
     public String getLoginInUsername() throws RemoteException;
 

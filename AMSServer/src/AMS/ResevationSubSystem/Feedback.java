@@ -6,13 +6,14 @@
 package AMS.ResevationSubSystem;
 
 import AMS.DB_SC_Manager;
+import java.io.Serializable;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import org.bson.Document;
 
 
-public class Feedback {
+public class Feedback implements Serializable {
 int feedbackID;
 String description;
 int rating;
@@ -21,17 +22,19 @@ int rating;
         UnicastRemoteObject.exportObject((Remote) this, 0);
     }
 
-    public Feedback(int feedbackID, String description, int rating) {
-
-        this.feedbackID = feedbackID;
+    public Feedback(String description, int rating) {
+        this.feedbackID = DB_SC_Manager.getID_Counter();
         this.description = description;
         this.rating = rating;
-        Document doc = new Document("feedbackID", feedbackID)
+        Document doc = new Document("feedbackID", this.feedbackID)
                 .append("description", description)
                 .append("rating", rating);
 
         DB_SC_Manager.getFeedbacks().insertOne(doc);
         DB_SC_Manager.getFeedbacks_S().add(this);
+        int count = DB_SC_Manager.getID_Counter()+1;
+        DB_SC_Manager.setID_Counter(count);
+        
     }
 
     public int getFeedbackID() {
@@ -41,8 +44,6 @@ int rating;
     public void setFeedbackID(int feedbackID) {
         this.feedbackID = feedbackID;
     }
-
-
 
     public String getDescription() {
         return description;
@@ -59,5 +60,5 @@ int rating;
     public void setRating(int rating) {
         this.rating = rating;
     }
-
+    
 }

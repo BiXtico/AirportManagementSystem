@@ -5,10 +5,17 @@
  */
 package AMS.FlightManagementSubSystem;
 
+import AMS.ResevationSubSystem.PObserver;
+
 /**
  *
  * @author mahmo
  */
 public interface FlightI {
-    
+
+    public void addNotificationObserver(PObserver PO);
+
+    //public void removeNotificationObserver(PObserver PO)throws RemoteException;
+   public void NotifyAll(String news);
 }
+

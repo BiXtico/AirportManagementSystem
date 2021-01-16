@@ -131,7 +131,14 @@ public class BookFlightGUI extends javax.swing.JFrame {
         Destination = DestinationField.getText();
         if(date !=null && Destination !=null && numofseats != 0){
         try {
-            PassengerController.bookflight(numofseats, date, Destination);
+            if(PassengerController.bookflight(numofseats, date, Destination)){
+                JOptionPane.showMessageDialog(null, "Alert:Success", "Message",
+                    JOptionPane.INFORMATION_MESSAGE);
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Alert:Failed", "Message",
+                    JOptionPane.INFORMATION_MESSAGE);
+            }
         } catch (RemoteException ex) {
             Logger.getLogger(BookFlightGUI.class.getName()).log(Level.SEVERE, null, ex);
         }

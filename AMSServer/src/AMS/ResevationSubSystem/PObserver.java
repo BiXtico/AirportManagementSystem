@@ -5,10 +5,12 @@
  */
 package AMS.ResevationSubSystem;
 
+import java.rmi.RemoteException;
+
 /**
  *
  * @author mahmo
  */
 public interface PObserver {
-    
+    public void Notify(String news) throws RemoteException;
 }

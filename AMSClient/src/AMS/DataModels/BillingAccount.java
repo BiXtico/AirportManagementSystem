@@ -1,9 +1,11 @@
 
 package AMS.DataModels;
 
+import java.io.Serializable;
 
 
-public class BillingAccount {
+
+public class BillingAccount implements Serializable {
     private int AccountID;
     private double balance;
 

@@ -4,11 +4,14 @@
  * and open the template in the editor.
  */
 package AMS.DataModels;
+
+import java.io.Serializable;
+
 /**
  *
  * @author mahmo
  */
-public class Feedback {
+public class Feedback implements Serializable {
 
     int feedbackID;
     String description;

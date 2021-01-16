@@ -7,25 +7,29 @@ package AMS.PlaneManagementSubSystem;
 
 
 import AMS.DB_SC_Manager;
+import java.io.Serializable;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import org.bson.Document;
 
-public class PlaneSlot {
+public class PlaneSlot implements Serializable {
     private int slotID;
     private boolean isAvailable;
 
     public PlaneSlot()throws RemoteException{
          UnicastRemoteObject.exportObject((Remote) this, 0);
     }
-    public PlaneSlot(int slotID, boolean isAvailable) {
-        this.slotID = slotID;
+    public PlaneSlot(boolean isAvailable) {
+        
+        this.slotID = DB_SC_Manager.getID_Counter();
         this.isAvailable = isAvailable;
-        Document doc = new Document("slotID", slotID)
+        Document doc = new Document("slotID", this.slotID)
         .append("isAvailable", isAvailable);
         DB_SC_Manager.getPlaneSlots().insertOne(doc);
         DB_SC_Manager.getPlaneSlots_S().add(this);
+         int count = DB_SC_Manager.getID_Counter()+1;
+        DB_SC_Manager.setID_Counter(count);
     }
 
     public int getSlotID() {

@@ -5,6 +5,8 @@
  */
 package AMS.Controllers;
 
+import AMS.DataModels.Booking;
+import AMS.DataModels.Flight;
 import AMS.Interfaces.PassengerInterface;
 import AMS.MainPassengerGUI;
 import AMS.PassengerGUI.BookFlightGUI;
@@ -16,6 +18,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
 
 /**
  *
@@ -74,25 +77,50 @@ public final class PassengerController {
         main.setVisible(true);
     }
     public static void SaveAndExit_(){
-        
+        //implement
         System.exit(0);
     }
 
-    public static void cancelbookedflight(String Destination) throws RemoteException{
-        currentP.cancelBookedFlight(Destination);
+    public static boolean cancelbookedflight(String Destination) throws RemoteException{
+        return currentP.cancelBookedFlight(Destination);
     }
-    public static void bookflight(int numofseats,String date,String Destination) throws RemoteException{
-        currentP.bookFlight(numofseats, date,Destination);
+    public static boolean bookflight(int numofseats,String date,String Destination) throws RemoteException{
+        return currentP.bookFlight(numofseats, date,Destination);
     }
-    public static void editbookedflight(int bookingID, int seats) throws RemoteException{
-        currentP.editBookedFlight(bookingID, seats);
+    public static boolean editbookedflight(int bookingID, int seats) throws RemoteException{
+        return currentP.editBookedFlight(bookingID, seats);
     }
     public static String viewflight() throws RemoteException{
-        return currentP.viewBookedFlights();
+        ArrayList<Booking> BB = currentP.viewBookedFlights();
+        String S = "";
+        for(Booking B: BB){
+            S+= "Booking ID : " + B.getBookingID() + "\n";
+            S+= "num of seats : " + B.getNumofseats() + "\n";
+            S+= "Destination : " + B.getDestination() + "\n";
+            S+= "bookingDate : " + B.getBookingDate() + "\n";
+        }
+        return S;
     }
-    public static void reviewflight(String feedback, int flightid) throws RemoteException{
-        currentP.createFeedback(feedback, flightid);
+    public static void reviewflight(String feedback, int flightid,int rating) throws RemoteException{
+        currentP.createFeedback(feedback, flightid,rating);
     }
+    
+     public static String searchMethod(String searchable,int num)throws RemoteException{
+         ArrayList<Flight> F = currentP.searchMethod(searchable, num);
+         String S= "";
+         for(Flight f:F){
+            S+= "Flight ID : " + f.getFlightID() + "\n";
+            S+= "plane : " + f.getPlane() + "\n";
+            S+= "gate : " + f.getGate()+ "\n";
+            S+= "pilot : " + f.getPilot()+ "\n";
+            S+= "destination : " + f.getDestination() + "\n";
+            S+= "airline : " + f.getAirline() + "\n";
+            S+= "departureTime : " + f.getDepartureTime() + "\n";
+            S+= "departureDate: " + f.getDepartureDate()+ "\n";
+         }
+         return S;
+     }
+    
     public static PassengerInterface getCurrentP() {
         return currentP;
     }

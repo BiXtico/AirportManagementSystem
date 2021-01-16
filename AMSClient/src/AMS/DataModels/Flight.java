@@ -5,6 +5,7 @@
  */
 package AMS.DataModels;
 
+import java.io.Serializable;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
  *
  * @author mahmo
  */
-public class Flight {
+public class Flight implements Serializable {
      private int flightID;
     private Plane plane;
     private Gate gate;

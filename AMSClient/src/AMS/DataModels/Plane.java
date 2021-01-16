@@ -5,11 +5,13 @@
  */
 package AMS.DataModels;
 
+import java.io.Serializable;
+
 /**
  *
  * @author mahmo
  */
-public class Plane {
+public class Plane implements Serializable  {
     private int planeID;
     private int planeCapacity;
     private PlaneSlot slot;

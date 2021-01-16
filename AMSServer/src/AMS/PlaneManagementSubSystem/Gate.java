@@ -2,12 +2,13 @@
 package AMS.PlaneManagementSubSystem;
 
 import AMS.DB_SC_Manager;
+import java.io.Serializable;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import org.bson.Document;
 
-public class Gate {
+public class Gate implements Serializable {
     private int gateNum;
     private boolean isAvailable; 
 
@@ -16,8 +17,8 @@ public class Gate {
     }
 
 
-    public Gate(int gateNum, boolean isAvailable) {
-        this.gateNum = gateNum;
+    public Gate(boolean isAvailable) {
+        this.gateNum = DB_SC_Manager.getID_Counter();
         this.isAvailable = isAvailable;
         
         Document doc = new Document("gateNum", gateNum)
@@ -25,6 +26,8 @@ public class Gate {
 
         DB_SC_Manager.getGates().insertOne(doc);
         DB_SC_Manager.getGates_S().add(this);
+         int count = DB_SC_Manager.getID_Counter()+1;
+        DB_SC_Manager.setID_Counter(count);
     }
 
     public int getGateNum()throws RemoteException {

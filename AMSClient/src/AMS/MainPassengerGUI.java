@@ -198,13 +198,13 @@ public class MainPassengerGUI extends javax.swing.JFrame {
                     JOptionPane.INFORMATION_MESSAGE);
         } else if (SearchDestinationRadio.isSelected()) {
             try {
-                SearchShowArea.setText(PassengerController.getCurrentP().searchMethod(searchMaterial, 1));
+                SearchShowArea.setText(PassengerController.searchMethod(searchMaterial, 1));
             } catch (RemoteException ex) {
                 Logger.getLogger(MainPassengerGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (SearchAirlineRadio.isSelected()) {
             try {
-                SearchShowArea.setText(PassengerController.getCurrentP().searchMethod(searchMaterial, 2));
+                SearchShowArea.setText(PassengerController.searchMethod(searchMaterial, 2));
             } catch (RemoteException ex) {
                 Logger.getLogger(MainPassengerGUI.class.getName()).log(Level.SEVERE, null, ex);
             }

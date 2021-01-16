@@ -1,8 +1,10 @@
 
 package AMS.DataModels;
 
+import java.io.Serializable;
 
-public class Booking {
+
+public class Booking implements Serializable {
     private int bookingID;
     private int numofseats;
     private String Destination;

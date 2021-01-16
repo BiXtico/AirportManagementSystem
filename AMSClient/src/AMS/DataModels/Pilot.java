@@ -5,10 +5,12 @@
  */
 package AMS.DataModels;
 
+import java.io.Serializable;
+
 /**
  *
  * @author mahmo
  */
-public class Pilot {
+public class Pilot implements Serializable  {
     
 }

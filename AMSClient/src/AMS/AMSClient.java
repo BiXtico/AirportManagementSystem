@@ -13,7 +13,7 @@ public class AMSClient {
         PassengerController ss = new PassengerController();
         ss.LookupPassenger("bix", 8787657);
         System.out.println(ss.getCurrentP().getStatus());
-        SystemManagerController.loginInvoke();
+        //SystemManagerController.loginInvoke();
     }
     
 }

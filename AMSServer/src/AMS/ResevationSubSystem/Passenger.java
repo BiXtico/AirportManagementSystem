@@ -9,6 +9,7 @@ import AMS.FlightManagementSubSystem.Flight;
 import AMS.DB_SC_Manager;
 import AMS.Interfaces.PassengerInterface;
 import AMS.User;
+import java.io.Serializable;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -20,7 +21,7 @@ import org.bson.Document;
  *
  * @author mahmo
  */
-public class Passenger extends User implements PassengerInterface {
+public class Passenger extends User implements PassengerInterface,PObserver,Serializable  {
 
     private String status, nationality;
     private BillingAccount billingAcc;
@@ -31,8 +32,8 @@ public class Passenger extends User implements PassengerInterface {
         UnicastRemoteObject.exportObject((Remote) this, 0);
     }
 
-    public Passenger(int userID, int age, int SSN, String username, String status, String email, String nationality, BillingAccount billingAcc, ArrayList<Booking> bookings) throws RemoteException {
-        super(userID, age, SSN, username, email);
+    public Passenger( int age, int SSN, String username, String status, String email, String nationality, BillingAccount billingAcc, ArrayList<Booking> bookings) throws RemoteException {
+        super(DB_SC_Manager.getID_Counter(), age, SSN, username, email);
         UnicastRemoteObject.exportObject((Remote) this, 0);
         this.nationality = nationality;
         this.status = status;
@@ -42,7 +43,7 @@ public class Passenger extends User implements PassengerInterface {
         this.bookings.forEach((i) -> {
             books.add(i.getBookingID());
         });
-        Document doc = new Document("userID", userID)
+        Document doc = new Document("userID", DB_SC_Manager.getID_Counter())
                 .append("age", age)
                 .append("SSN", SSN)
                 .append("username", username)
@@ -52,15 +53,17 @@ public class Passenger extends User implements PassengerInterface {
                 .append("bookings", books);
         DB_SC_Manager.getPassengers().insertOne(doc);
         DB_SC_Manager.getPassengers_S().add(this);
+        int count = DB_SC_Manager.getID_Counter()+1;
+        DB_SC_Manager.setID_Counter(count);
     }
 
-    public Passenger(int userID, int age, int SSN, String username, String email, String nationality) throws RemoteException {
-        super(userID, age, SSN, username, email);
+    public Passenger(int age, int SSN, String username, String email, String nationality) throws RemoteException {
+        super(DB_SC_Manager.getID_Counter(), age, SSN, username, email);
         UnicastRemoteObject.exportObject(this, 0);
         this.nationality = nationality;
         this.billingAcc = null;
         this.bookings = null;
-        Document doc = new Document("userID", userID)
+        Document doc = new Document("userID", DB_SC_Manager.getID_Counter())
                 .append("age", age)
                 .append("SSN", SSN)
                 .append("username", username)
@@ -69,24 +72,18 @@ public class Passenger extends User implements PassengerInterface {
                 .append("bookings", null);
         DB_SC_Manager.getPassengers().insertOne(doc);
         DB_SC_Manager.getPassengers_S().add(this);
+        int count = DB_SC_Manager.getID_Counter()+1;
+        DB_SC_Manager.setID_Counter(count);
     }
 
     @Override
     public String getStatus() throws RemoteException {
         return status;
-        /*Document document = DB_SC_Manager.getPassengers()
-            .find(new BasicDBObject("userID", this.getUserID()))
-            .projection(Projections.fields(Projections.include("status"), Projections.excludeId())).first();
-        return document.getString("status");*/
     }
 
     @Override
     public String getNationality() throws RemoteException {
         return nationality;
-        /*Document document = DB_SC_Manager.getPassengers()
-           .find(new BasicDBObject("userID", this.getUserID()))
-           .projection(Projections.fields(Projections.include("nationality"), Projections.excludeId())).first();
-        return document.getString("nationality");*/
     }
 
     @Override
@@ -121,7 +118,6 @@ public class Passenger extends User implements PassengerInterface {
 
     }
     
-    
     @Override
     public String getLoginInUsername() {
         return this.getUsername();
@@ -136,58 +132,65 @@ public class Passenger extends User implements PassengerInterface {
     public String getLoginInEmail() {
         return this.getEmail();
     }
-    
     @Override
-    public String searchMethod(String searchable,int num) throws RemoteException {
+    public ArrayList<Flight> searchMethod(String searchable,int num) throws RemoteException {
         if(num == 1) str = new SearchByDestination();
         else str = new SearchByAirline();
         return str.searchMethod(searchable);
     }   
-
     @Override
-    public void bookFlight(int numOfSeats, String bookingDate, String Destination) throws RemoteException {
-        Booking newBook = new Booking(DB_SC_Manager.getID_Counter(), numOfSeats, bookingDate);
-        this.bookings.add(newBook);
+    public boolean bookFlight(int numOfSeats, String bookingDate, String Destination) throws RemoteException {
+        for(Flight f:DB_SC_Manager.getFlights_S()){
+            if(f.getDestination().equals(Destination)){
+                Booking newBook = new Booking(DB_SC_Manager.getID_Counter(), numOfSeats, bookingDate);
+                 this.bookings.add(newBook);
+                 return true;
+            }
+        }
+        return false;
     }
-
     @Override
-    public void cancelBookedFlight(String Destination) throws RemoteException {
+    public boolean cancelBookedFlight(String Destination) throws RemoteException {
         for (Booking b : DB_SC_Manager.getBookings_S()) {
             if (b.getDestination() == null ? Destination == null : b.getDestination().equals(Destination)) {
                 DB_SC_Manager.getBookings_S().remove(b);
                 this.bookings.remove(b);
-                break;
+                DB_SC_Manager.removeBooking(Destination);
+                return true;
             }
         }
+        return false;
     }
-
     @Override
-    public void editBookedFlight(int bookingID, int numOfSeats) throws RemoteException {
+    public boolean editBookedFlight(int bookingID, int numOfSeats) throws RemoteException {
         for (Booking b : DB_SC_Manager.getBookings_S()) {
             if (b.getBookingID() == bookingID) {
                 b.setNumofseats(numOfSeats);
                 for (Booking bb : this.bookings) {
                     if (bb.getBookingID() == bookingID) {
                         bb.setNumofseats(numOfSeats);
-                        break;
+                        return true;
                     }
                 }
             }
         }
+        return false;
     }
-
     @Override
-    public String viewBookedFlights() throws RemoteException {
-        return " ";
+    public ArrayList<Booking> viewBookedFlights() throws RemoteException {
+        return this.bookings;
     }
-
     @Override
-    public void createFeedback(String Feedback, int FlightID) throws RemoteException {
-        Feedback feedback = new Feedback();
+    public void createFeedback(String Feedback, int FlightID, int rating) throws RemoteException {
+        for(Flight f:DB_SC_Manager.getFlights_S()){
+            if(f.getFlightID() == FlightID){
+                Feedback feedback = new Feedback(Feedback, rating);
+                DB_SC_Manager.getFeedbacks_S().add(feedback);
+            }
+        }
     }
-
     @Override
-    public void Notify() throws RemoteException {
-
+    public void Notify(String news) throws RemoteException {
+        System.out.print("You have one update !!  " + news);
     }
 }

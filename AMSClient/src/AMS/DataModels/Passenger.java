@@ -6,6 +6,7 @@
 package AMS.DataModels;
 
 import AMS.Interfaces.PassengerInterface;
+import java.io.Serializable;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -16,7 +17,7 @@ import java.util.List;
  *
  * @author mahmo
  */
-public class Passenger extends User {
+public class Passenger extends User implements Serializable  {
 
     private String status, nationality;
     private BillingAccount billingAcc;

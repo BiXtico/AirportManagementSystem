@@ -117,7 +117,13 @@ public class ManageBookingGUI extends javax.swing.JFrame {
         id = Integer.parseInt(BookingIDField.getText());
         if(id !=0 && numofseats != 0){
         try {
-            PassengerController.editbookedflight(id, numofseats);
+            if(PassengerController.editbookedflight(id, numofseats)){
+                JOptionPane.showMessageDialog(null, "Alert:Success", "Message",
+                    JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(null, "Alert:Failed", "Message",
+                    JOptionPane.INFORMATION_MESSAGE);
+            }
         } catch (RemoteException ex) {
             Logger.getLogger(ManageBookingGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
