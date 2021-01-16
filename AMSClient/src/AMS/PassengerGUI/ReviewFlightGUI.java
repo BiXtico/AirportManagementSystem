@@ -118,7 +118,7 @@ public class ReviewFlightGUI extends javax.swing.JFrame {
         int rating = 0;
         review = ReviewField.getText();
         flightid = Integer.parseInt(FlightIDField.getText());
-        if(flightid !=0 && review != null && rating!=0){
+        if(flightid !=0 || review != null || rating!=0){
         try {
             PassengerController.reviewflight(review, flightid,rating);
         } catch (RemoteException ex) {

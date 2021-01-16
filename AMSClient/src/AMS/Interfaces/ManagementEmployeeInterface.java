@@ -1,7 +1,7 @@
 
 package AMS.Interfaces;
 
-import AMS.ResevationSubSystem.Booking;
+import AMS.DataModels.Booking;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;

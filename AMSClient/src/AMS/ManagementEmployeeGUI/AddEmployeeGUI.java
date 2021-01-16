@@ -2,7 +2,6 @@
 package AMS.ManagementEmployeeGUI;
 
 import AMS.Controllers.AdminController;
-import AMS.Controllers.PassengerController;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

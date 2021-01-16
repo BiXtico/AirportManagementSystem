@@ -31,6 +31,26 @@ public class Passenger extends User implements PassengerInterface,PObserver,Seri
     public Passenger() throws RemoteException {
         UnicastRemoteObject.exportObject((Remote) this, 0);
     }
+    
+    public Passenger( int age, int SSN, String username, String status, String email, String nationality, BillingAccount billingAcc) throws RemoteException {
+        super(DB_SC_Manager.getID_Counter(), age, SSN, username, email);
+        UnicastRemoteObject.exportObject((Remote) this, 0);
+        this.nationality = nationality;
+        this.status = status;
+        this.billingAcc = billingAcc;
+        Document doc = new Document("userID", DB_SC_Manager.getID_Counter())
+                .append("age", age)
+                .append("SSN", SSN)
+                .append("username", username)
+                .append("status", status)
+                .append("nationality", nationality)
+                .append("AccountID", billingAcc.getAccountID())
+                .append("bookings", null);
+        DB_SC_Manager.getPassengers().insertOne(doc);
+        DB_SC_Manager.getPassengers_S().add(this);
+        int count = DB_SC_Manager.getID_Counter()+1;
+        DB_SC_Manager.setID_Counter(count);
+    }
 
     public Passenger( int age, int SSN, String username, String status, String email, String nationality, BillingAccount billingAcc, ArrayList<Booking> bookings) throws RemoteException {
         super(DB_SC_Manager.getID_Counter(), age, SSN, username, email);

@@ -129,7 +129,7 @@ public class BookFlightGUI extends javax.swing.JFrame {
         numofseats = Integer.parseInt(NumOfSeatsField.getText());
         date = DateField.getText();
         Destination = DestinationField.getText();
-        if(date !=null && Destination !=null && numofseats != 0){
+        if(date !=null || Destination !=null || numofseats != 0){
         try {
             if(PassengerController.bookflight(numofseats, date, Destination)){
                 JOptionPane.showMessageDialog(null, "Alert:Success", "Message",

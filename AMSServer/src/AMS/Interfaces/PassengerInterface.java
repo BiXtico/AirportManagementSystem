@@ -8,7 +8,6 @@ package AMS.Interfaces;
 import AMS.FlightManagementSubSystem.Flight;
 import AMS.ResevationSubSystem.BillingAccount;
 import AMS.ResevationSubSystem.Booking;
-import AMS.ResevationSubSystem.SearchStrategy;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;

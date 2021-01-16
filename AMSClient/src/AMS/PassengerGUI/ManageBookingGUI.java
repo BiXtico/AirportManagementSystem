@@ -115,7 +115,7 @@ public class ManageBookingGUI extends javax.swing.JFrame {
         int id = 0;
         numofseats = Integer.parseInt(NumOfSeatsField.getText());
         id = Integer.parseInt(BookingIDField.getText());
-        if(id !=0 && numofseats != 0){
+        if(id !=0 || numofseats != 0){
         try {
             if(PassengerController.editbookedflight(id, numofseats)){
                 JOptionPane.showMessageDialog(null, "Alert:Success", "Message",

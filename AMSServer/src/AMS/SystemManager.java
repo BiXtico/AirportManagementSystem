@@ -20,16 +20,13 @@ public class SystemManager implements SystemManagerInterface, Serializable {
     @Override
     public void createAccountPassengers(int age, int SSN, String username, String email, String nationality) throws RemoteException {
         Passenger pass = new Passenger(age, SSN, username, email, nationality);
+        DB_SC_Manager.getPassengers_S().add(pass);
     }
 
     @Override
     public void createAccountEmployees(int age, int SSN, String username, String email, float salary) throws RemoteException {
         ManagementEmployee me = new ManagementEmployee(age, SSN, username, email, salary);
-    }
-
-    @Override
-    public void createBillingAccount(double balance) throws RemoteException {
-        BillingAccount bc = new BillingAccount(balance);
+        DB_SC_Manager.getManagmentEmployees_S().add(me);
     }
 
     @Override

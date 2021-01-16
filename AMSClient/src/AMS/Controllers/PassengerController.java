@@ -97,7 +97,7 @@ public final class PassengerController {
             S+= "Booking ID : " + B.getBookingID() + "\n";
             S+= "num of seats : " + B.getNumofseats() + "\n";
             S+= "Destination : " + B.getDestination() + "\n";
-            S+= "bookingDate : " + B.getBookingDate() + "\n";
+            S+= "bookingDate : " + B.getBookingDate() + "\n\n";
         }
         return S;
     }
@@ -116,7 +116,7 @@ public final class PassengerController {
             S+= "destination : " + f.getDestination() + "\n";
             S+= "airline : " + f.getAirline() + "\n";
             S+= "departureTime : " + f.getDepartureTime() + "\n";
-            S+= "departureDate: " + f.getDepartureDate()+ "\n";
+            S+= "departureDate: " + f.getDepartureDate()+ "\n\n";
          }
          return S;
      }

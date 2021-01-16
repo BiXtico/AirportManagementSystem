@@ -17,8 +17,6 @@ public interface SystemManagerInterface extends Remote {
 
     public void createAccountEmployees(int age, int SSN, String username, String email, float salary) throws RemoteException;
 
-    public void createBillingAccount(double balance) throws RemoteException;
-
     public void refundPayment(int AccountID, double balance) throws RemoteException;
 
     public Gate assignPassengerGate() throws RemoteException;

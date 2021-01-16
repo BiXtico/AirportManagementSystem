@@ -8,8 +8,6 @@ package AMS;
 import AMS.Controllers.PassengerController;
 import AMS.Controllers.AdminController;
 import java.rmi.RemoteException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**

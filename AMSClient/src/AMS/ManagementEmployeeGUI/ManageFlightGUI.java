@@ -5,6 +5,11 @@
  */
 package AMS.ManagementEmployeeGUI;
 
+import AMS.Controllers.ManagementEmployeeController;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author mahmo
@@ -27,21 +32,187 @@ public class ManageFlightGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Airline1 = new javax.swing.JLabel();
+        title = new javax.swing.JLabel();
+        btn_edit = new javax.swing.JButton();
+        btn_cancel = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        box_3 = new javax.swing.JTextField();
+        box_1 = new javax.swing.JTextField();
+        box_5 = new javax.swing.JTextField();
+        box_2 = new javax.swing.JTextField();
+        box_4 = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        Airline = new javax.swing.JLabel();
+        DepartureTime = new javax.swing.JLabel();
+        DepartureDate = new javax.swing.JLabel();
+
+        Airline1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        Airline1.setText("Destination");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        title.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        title.setText("Manage Flight");
+
+        btn_edit.setText("Edit Flight Details");
+        btn_edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_editActionPerformed(evt);
+            }
+        });
+
+        btn_cancel.setText("Cancel Flight");
+        btn_cancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel1.setText("Flight ID");
+
+        box_3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                box_3ActionPerformed(evt);
+            }
+        });
+
+        box_5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                box_5ActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel2.setText("Destination");
+
+        Airline.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        Airline.setText("Airline");
+
+        DepartureTime.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        DepartureTime.setText("Departure Time");
+
+        DepartureDate.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        DepartureDate.setText("Departure Date");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(231, 231, 231)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1)
+                    .addComponent(Airline)
+                    .addComponent(DepartureTime)
+                    .addComponent(DepartureDate))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(330, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(box_5, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(box_4, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(box_3, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(box_2, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(71, 71, 71)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btn_cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btn_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(258, 258, 258)))
+                .addGap(123, 123, 123))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(470, Short.MAX_VALUE)
+                    .addComponent(box_1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(382, 382, 382)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(71, 71, 71)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(box_2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(59, 59, 59)
+                        .addComponent(btn_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(box_3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Airline))))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(DepartureDate)
+                    .addComponent(box_4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(52, 52, 52)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(box_5, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DepartureTime))
+                .addGap(45, 45, 45))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(200, 200, 200)
+                    .addComponent(box_1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(422, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
+        // TODO add your handling code here:
+        int id = 0;
+        id = Integer.parseInt(box_1.getText());
+        String dst = box_2.getText();
+        String airline = box_3.getText();
+        String date = box_4.getText();
+        String time = box_5.getText();
+        
+        ManagementEmployeeController me;
+        try {
+            me = new ManagementEmployeeController();
+            me.editFlightInfo(id, date, airline, date, time);
+        } catch (RemoteException ex) {
+            Logger.getLogger(ManageFlightGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_btn_editActionPerformed
+
+    private void box_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_box_5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_box_5ActionPerformed
+
+    private void box_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_box_3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_box_3ActionPerformed
+
+    private void btn_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelActionPerformed
+        int id = 0;
+        id = Integer.parseInt(box_1.getText());
+
+        try {
+            if (id != 0){
+                ManagementEmployeeController me = new ManagementEmployeeController();
+                me.cancelFlight(id);
+            }  
+        } catch (RemoteException ex) {
+            Logger.getLogger(ManageFlightGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_cancelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +250,19 @@ public class ManageFlightGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Airline;
+    private javax.swing.JLabel Airline1;
+    private javax.swing.JLabel DepartureDate;
+    private javax.swing.JLabel DepartureTime;
+    private javax.swing.JTextField box_1;
+    private javax.swing.JTextField box_2;
+    private javax.swing.JTextField box_3;
+    private javax.swing.JTextField box_4;
+    private javax.swing.JTextField box_5;
+    private javax.swing.JButton btn_cancel;
+    private javax.swing.JButton btn_edit;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 }
